@@ -37,9 +37,18 @@ if ($baseUrl === '') {
         <?php else: ?>
             <div class="list-group">
                 <?php foreach ($entries as $dir):
-                    // encoder le segment pour gérer espaces/caractères spéciaux
-                    $encoded = rawurlencode($dir);
-                    $href = rtrim($baseUrl, '/') . '/' . $encoded . '/';
+                        
+                        // Si ce n'est pas le répertoire .git, créer le lien
+                        if ($dir !== '.git') {
+                            // encoder le segment pour gérer espaces/caractères spéciaux
+                            $encoded = rawurlencode($dir);
+                            $href = rtrim($baseUrl, '/') . '/' . $encoded . '/';
+                        } else {
+                            continue; // passer au répertoire suivant
+                        }
+                   
+                        
+                                         
                 ?>
                     <a class="list-group-item list-group-item-action p-3"  href="<?php echo htmlspecialchars($href, ENT_QUOTES, 'UTF-8'); ?>">
                         <?php echo htmlspecialchars($dir, ENT_QUOTES, 'UTF-8'); ?>
